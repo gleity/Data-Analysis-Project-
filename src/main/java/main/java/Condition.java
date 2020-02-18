@@ -46,7 +46,7 @@ public class Condition {
         return conditions;
     }
 
-    public boolean get_lambda(ArrayList<int[]> cond, DataExample example) {
+    public boolean CommitLambda(ArrayList<int[]> cond, DataExample example) {
         if (set == 1) {
             int[] temp = cond.get(0);
             return example.getValue(temp[0], temp[1]) > 128;

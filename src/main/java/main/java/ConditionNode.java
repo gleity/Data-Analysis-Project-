@@ -27,9 +27,9 @@ public class ConditionNode implements Node {
 
     public void applyExamples(ArrayList<DataExample> examples) {
         ArrayList<DataExample> passedExamples = (examples.stream()
-                .filter(e -> this.condition.get_lambda(maxCondition, e))).collect(Collectors.toCollection(ArrayList::new));
+                .filter(e -> this.condition.CommitLambda(maxCondition, e))).collect(Collectors.toCollection(ArrayList::new));
         ArrayList<DataExample> failedExamples = (examples.stream()
-                .filter(e -> !this.condition.get_lambda(maxCondition, e))).collect(Collectors.toCollection(ArrayList::new));
+                .filter(e -> !this.condition.CommitLambda(maxCondition, e))).collect(Collectors.toCollection(ArrayList::new));
         if (this.left == null) {
             this.left = new LabelNode();
             ((LabelNode) this.left).setParent(this);

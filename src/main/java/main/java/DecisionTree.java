@@ -99,7 +99,7 @@ public class DecisionTree implements Serializable {
         int[] label_count_pass = new int[10];
         int numOfExamples = examples.size();
         for (DataExample example : examples) {
-            if (condition.get_lambda(cond, example)) {
+            if (condition.CommitLambda(cond, example)) {
                 label_count_pass[example.getLabel()]++;
             } else {
                 label_count_fail[example.getLabel()]++;
