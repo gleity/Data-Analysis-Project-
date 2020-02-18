@@ -16,18 +16,13 @@ public class Predict {
         MinimalDecisonTree decisionTree = parseTreeFromFile(treeFile);
         ArrayList<DataExample> dataExamples = Parse(testFile);
         double failRate = decisionTree.apply_singly(dataExamples);
-        System.out.println(failRate);
     }
 
 
     public static ArrayList<DataExample> Parse(String input_file) throws IOException {
         ArrayList<DataExample> dataStruct = new ArrayList<>();
-        String dir = System.getProperty("user.dir");
-        dir = dir + "\\src\\main\\" + input_file;
-        File csvFile = new File(dir);
-        if (csvFile.isFile()) {
             String row;
-            BufferedReader csvReader = new BufferedReader(new FileReader(dir));
+            BufferedReader csvReader = new BufferedReader(new FileReader(input_file));
             while ((row = csvReader.readLine()) != null) {
                 int[] data = Arrays.stream(row.split(",")).mapToInt(Integer::parseInt).toArray();
                 int label = data[0];
@@ -37,7 +32,6 @@ public class Predict {
                     System.arraycopy(data, i * 28, dataReshape[i], 0, 28);
                 }
                 dataStruct.add(new DataExample(label, dataReshape));
-            }
         }
         return dataStruct;
     }
@@ -61,8 +55,6 @@ public class Predict {
     public static void main(String[] args) throws IOException {
         String treeFile = args[0];
         String testFile = args[1];
-        String dir = System.getProperty("user.dir");
-        dir = dir + "\\"  + treeFile;
-        predict(dir, testFile);
+        predict(treeFile, testFile);
     }
 }

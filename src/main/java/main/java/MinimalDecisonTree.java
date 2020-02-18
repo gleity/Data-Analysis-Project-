@@ -15,6 +15,7 @@ public class MinimalDecisonTree {
             ArrayList<DataExample> wrapExample = new ArrayList<>();
             wrapExample.add(example);
             this.root.applyExamples(wrapExample);
+            System.out.println(example.getPredictedLabel());
         }
         double failRate = this.root.getFailRate() / examples.size();
         return (int)(failRate * 100);

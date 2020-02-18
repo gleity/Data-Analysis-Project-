@@ -46,6 +46,9 @@ public class LabelNode implements Node,Serializable {
             update_label();
             this.leaf_entropy = compute_leaf_entropy(this.examples.size());
         }
+        for (DataExample example: examples) {
+            example.setPredictedLabel(this.leaf_label);
+        }
     }
 
     public ArrayList<DataExample> getExamples() {

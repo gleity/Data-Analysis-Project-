@@ -11,12 +11,8 @@ public class LearnTree {
 
     public static ArrayList<DataExample> Parse(String input_file) throws IOException {
         ArrayList<DataExample> dataStruct = new ArrayList<>();
-        String dir = System.getProperty("user.dir");
-        dir = dir + "\\src\\main\\" + input_file;
-        File csvFile = new File(dir);
-        if (csvFile.isFile()) {
             String row;
-            BufferedReader csvReader = new BufferedReader(new FileReader(dir));
+            BufferedReader csvReader = new BufferedReader(new FileReader(input_file));
             while ((row = csvReader.readLine()) != null) {
                 int[] data = Arrays.stream(row.split(",")).mapToInt(Integer::parseInt).toArray();
                 int label = data[0];
@@ -26,7 +22,6 @@ public class LearnTree {
                     System.arraycopy(data, i * 28, dataReshape[i], 0, 28);
                 }
                 dataStruct.add(new DataExample(label, dataReshape));
-            }
         }
         return dataStruct;
     }
@@ -44,10 +39,8 @@ public class LearnTree {
         for (int i = 0; i <= level; i++) {
             int treeSize = (int) Math.pow(2, i);
             dt.setTree_size(treeSize);
-            System.out.println(String.format("building tree size %d", treeSize));
             dt.buildTree();
             int failRateValidation = dt.apply(test_set);
-            System.out.println("done building" + failRateValidation);
             if (dt.getFailRate() < fail_rate_min) {
                 fail_rate_min = dt.getFailRate();
                 best_size = dt.getTree_size();
@@ -55,7 +48,7 @@ public class LearnTree {
         }
         DecisionTree bestDT = new DecisionTree(data, best_size, conditions);
         bestDT.buildTree();
-        System.out.println("hi " + best_size);
+        System.out.println(String.format("num: %d \nerror: %d \nsize: %d",data_size,(int)(bestDT.getFailRate()*100), best_size));
         return bestDT;
     }
 
@@ -68,7 +61,6 @@ public class LearnTree {
     }
 
     public static void main(String[] args) throws IOException {
-        long startTime = System.nanoTime();
         int condition_set = Integer.parseInt(args[0]);
         int percentage = Integer.parseInt(args[1]);
         int tree_size = Integer.parseInt(args[2]);
@@ -78,7 +70,6 @@ public class LearnTree {
         ArrayList<DataExample> data = Parse(input_file);
         DecisionTree dt =learnTree(condition_set, percentage, tree_size, data);
         long endTime   = System.nanoTime();
-        double totalTime = (endTime - startTime)/(long)(6e+10);
         Gson gson =new Gson();
         String s = gson.toJson(dt,DecisionTree.class);
         writeToFile(s,output_file);
