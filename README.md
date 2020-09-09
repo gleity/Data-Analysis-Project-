@@ -6,5 +6,5 @@ In the project, we have to versions of decision trees, which differs in their co
 The condition is "is the value of pixel (X,Y) > 128 ?". In version 2 we generate graphs randomly (linear lines and paraboles) and choose the one with the highest hit rate
 with pixels that their value is bigger then 128.
 
-The algorithm build all the trees in sizes of powers of 2 until we reach the max size of 2^size, and then we choose the most optimal tree between all those trees.
+The algorithm builds all the trees in sizes of powers of 2 until we reach the max size of 2^size, and then we choose the most optimal tree between all those trees.
 The calculation of the most optimal tree is done by calculating the tree entropy through the trees construction, and improving leafs entropy each time we expand the tree.
